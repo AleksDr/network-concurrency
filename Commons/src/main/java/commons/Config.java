@@ -11,5 +11,9 @@ public interface Config {
 
   void writeToFileUserDef();
 
+  String getProperty(String key);
+
+  void storeProperty(String key, String value);
+
 
 }

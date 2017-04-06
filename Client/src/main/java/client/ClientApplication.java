@@ -14,19 +14,26 @@ import java.net.UnknownHostException;
  */
 public class ClientApplication {
   private static final Logger log = LogManager.getLogger(ClientApplication.class);
-  private static final ClientConfig config = ClientConfig.getInstance();
+  private static final String STOP_MSG = "Releasing control.";
+  private static int port = 1337;
+  private static String hostName = "localhost";
 
-  /**
-   * Starts the client application.
-   */
-  private static void runApp() {
+  public static void main(String[] args) {
+    log.info("Started new client application");
+
+    if (args.length > 1) {
+      port = Integer.parseInt(args[1]);
+    }
+    if (args.length > 0) {
+      hostName = args[0];
+    }
     try {
-      Socket sock = new Socket(config.getHostName(), config.getPort());
+      Socket sock = new Socket(hostName, port);
       DataOutputStream dataOutStream = new DataOutputStream(sock.getOutputStream());
       Console console = System.console();
       String message = null;
 
-      while (!config.getSafeword().equals(message)) {
+      while (!STOP_MSG.equals(message)) {
         message = console.readLine();
         dataOutStream.writeUTF(message);
       }
@@ -36,22 +43,6 @@ public class ClientApplication {
     } catch (IOException ex) {
       log.error(ex);
     }
-  }
-
-  /**
-   * Takes an array of arguments {String <hostname>, int <port>}.
-   */
-  public static void main(String[] args) {
-    log.info("Started new client application");
-
-    if (args.length > 1) {
-      config.setPort(Integer.parseInt(args[1]));
-    }
-    if (args.length > 0) {
-      config.setHostName(args[0]);
-    }
-
-    runApp();
   }
 
 }

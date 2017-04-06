@@ -13,7 +13,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Client" target="1.8" />
-      <module name="Commons" target="1.5" />
+      <module name="Commons" target="1.8" />
       <module name="networkconcurrency" target="1.5" />
       <module name="Server" target="1.8" />
     </bytecodeTargetLevel>
